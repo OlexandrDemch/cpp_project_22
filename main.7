@@ -1,0 +1,46 @@
+#include <iostream>
+
+void removeElements(int*& arr, int& size, int index, int removeCount) {
+
+    int newSize = size - removeCount;
+
+    int* newArr = new int[newSize];
+
+    for (int i = 0; i < index; i++) {
+        newArr[i] = arr[i];
+    }
+
+    for (int i = index + removeCount; i < size; i++) {
+        newArr[i - removeCount] = arr[i];
+    }
+
+    delete[] arr;
+    arr = newArr;
+    size = newSize;
+}
+
+int main() {
+    int* arr = new int[7] {1, 2, 3, 4, 5, 6, 7};
+    int size = 7;
+
+    std::cout << "Initial array: ";
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    int removeIndex = 2;
+    int removeCount = 3;
+
+    removeElements(arr, size, removeIndex, removeCount);
+
+    std::cout << "Updated array: ";
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] arr; 
+
+    return 0;
+}
