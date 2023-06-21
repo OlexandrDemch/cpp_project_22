@@ -1,0 +1,133 @@
+#include <iostream>
+
+
+int* allocateMemory(int size) {
+    return new int[size];
+}
+
+
+void initializeArray(int* arr, int size) {
+    for (int i = 0; i < size; i++) {
+        arr[i] = 0;
+    }
+}
+
+
+void printArray(const int* arr, int size) {
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
+
+void deleteArray(int* arr) {
+    delete[] arr;
+}
+
+
+int* appendElement(int* arr, int& size, int element) {
+
+  int newSize = size + 1;
+    int* newArr = allocateMemory(newSize);
+
+
+    for (int i = 0; i < size; i++) {
+        newArr[i] = arr[i];
+    }
+
+
+    newArr[size] = element;
+
+
+    deleteArray(arr);
+
+
+    size = newSize;
+
+    return newArr;
+}
+
+
+int* insertElement(int* arr, int& size, int index, int element) {
+    if (index < 0 || index > size) {
+        std::cout << "Invalid index!" << std::endl;
+        return arr;
+    }
+
+    int newSize = size + 1;
+    int* newArr = allocateMemory(newSize);
+
+    for (int i = 0; i < index; i++) {
+        newArr[i] = arr[i];
+    }
+
+    newArr[index] = element;
+
+    for (int i = index; i < size; i++) {
+        newArr[i + 1] = arr[i];
+    }
+
+    deleteArray(arr);
+
+    size = newSize;
+
+    return newArr;
+}
+
+int* removeElement(int* arr, int& size, int index) {
+    if (index < 0 || index >= size) {
+        std::cout << "Invalid index!" << std::endl;
+        return arr;
+    }
+
+    int newSize = size - 1;
+    int* newArr = allocateMemory(newSize);
+
+    for (int i = 0; i < index; i++) {
+        newArr[i] = arr[i];
+    }
+
+    for (int i = index + 1; i < size; i++) {
+        newArr[i - 1] = arr[i];
+    }
+
+    deleteArray(arr);
+
+    size = newSize;
+
+    return newArr;
+}
+
+int main() {
+    int* arr = nullptr;
+    int size = 0;
+
+    int newSize = 5;
+    arr = allocateMemory(newSize);
+    initializeArray(arr, newSize);
+
+    std::cout << "Array: ";
+    printArray(arr, size);
+
+    arr = appendElement(arr, size, 10);
+    arr = appendElement(arr, size, 20);
+    arr = appendElement(arr, size, 30);
+
+    std::cout << "Updated array: ";
+    printArray(arr, size);
+
+    arr = insertElement(arr, size, 1, 15);
+
+    std::cout << "Updated array: ";
+    printArray(arr, size);
+
+    arr = removeElement(arr, size, 2);
+
+    std::cout << "Updated array: ";
+    printArray(arr, size);
+
+    deleteArray(arr);
+
+    return 0;
+}
