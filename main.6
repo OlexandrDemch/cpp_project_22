@@ -1,0 +1,54 @@
+#include <iostream>
+
+void insertElements(int*& arr, int& size, int index, const int* elements, int elementsCount) {
+
+    int newSize = size + elementsCount;
+
+    int* newArr = new int[newSize];
+
+    for (int i = 0; i < index; i++) {
+        newArr[i] = arr[i];
+    }
+
+    for (int i = 0; i < elementsCount; i++) {
+        newArr[index + i] = elements[i];
+    }
+
+    
+    for (int i = index; i < size; i++) {
+        newArr[elementsCount + i] = arr[i];
+    }
+
+ 
+    delete[] arr;
+    arr = newArr;
+    size = newSize;
+}
+
+int main() {
+    int* arr = new int[5] {1, 2, 3, 7, 8};
+    int size = 5;
+
+    int elements[] = { 4, 5, 6 };
+    int elementsCount = sizeof(elements) / sizeof(elements[0]);
+
+    std::cout << "Initial array: ";
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    int insertIndex = 3;
+
+    insertElements(arr, size, insertIndex, elements, elementsCount);
+
+    std::cout << "Updated array: ";
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] arr;  
+
+    return 0;
+}
