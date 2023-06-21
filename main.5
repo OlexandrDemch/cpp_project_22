@@ -1,0 +1,53 @@
+#include <iostream>
+
+void appendElements(int*& arr, int& size, const int* elements, int elementsCount) {
+    int* tempArr = new int[size];
+    for (int i = 0; i < size; i++) {
+        tempArr[i] = arr[i];
+    }
+
+    int newSize = size + elementsCount;
+    delete[] arr;
+    arr = new int[newSize];
+
+
+    for (int i = 0; i < size; i++) {
+        arr[i] = tempArr[i];
+    }
+    for (int i = 0; i < elementsCount; i++) {
+        arr[size + i] = elements[i];
+    }
+
+
+    size = newSize;
+
+  
+    delete[] tempArr;
+}
+
+int main() {
+    int* arr = new int[3] {1, 2, 3};
+    int size = 3;
+
+    int elements[] = { 4, 5, 6 };
+    int elementsCount = sizeof(elements) / sizeof(elements[0]);
+
+    std::cout << "Initial array: ";
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
+   
+    appendElements(arr, size, elements, elementsCount);
+
+    std::cout << "Updated array: ";
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] arr;  
+
+    return 0;
+}
