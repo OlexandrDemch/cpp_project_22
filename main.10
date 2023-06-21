@@ -1,0 +1,88 @@
+#include <iostream>
+#include <windows.h>
+
+void splitArray(int* arr, int size, int*& positiveArr, int& positiveSize, int*& negativeArr, int& negativeSize, int*& zeroArr, int& zeroSize) {
+    
+    int positiveCount = 0;
+    int negativeCount = 0;
+    int zeroCount = 0;
+
+    for (int i = 0; i < size; i++) {
+        if (arr[i] > 0) {
+            positiveCount++;
+        }
+        else if (arr[i] < 0) {
+            negativeCount++;
+        }
+        else {
+            zeroCount++;
+        }
+    }
+
+    positiveSize = positiveCount;
+    negativeSize = negativeCount;
+    zeroSize = zeroCount;
+
+    positiveArr = new int[positiveSize];
+    negativeArr = new int[negativeSize];
+    zeroArr = new int[zeroSize];
+
+    int positiveIndex = 0;
+    int negativeIndex = 0;
+    int zeroIndex = 0;
+
+    for (int i = 0; i < size; i++) {
+        if (arr[i] > 0) {
+            positiveArr[positiveIndex] = arr[i];
+            positiveIndex++;
+        }
+        else if (arr[i] < 0) {
+            negativeArr[negativeIndex] = arr[i];
+            negativeIndex++;
+        }
+        else {
+            zeroArr[zeroIndex] = arr[i];
+            zeroIndex++;
+        }
+    }
+}
+
+
+    int main() {
+    SetConsoleOutputCP(1251);
+    const int size = 10;
+    int arr[size] = { 2, -5, 0, 7, -3, 0, 9, 1, -4, 6 };
+
+    int* positiveArr;
+    int positiveSize;
+    int* negativeArr;
+    int negativeSize;
+    int* zeroArr;
+    int zeroSize;
+
+    splitArray(arr, size, positiveArr, positiveSize, negativeArr, negativeSize, zeroArr, zeroSize);
+
+    std::cout << "Додатні елементи: ";
+    for (int i = 0; i < positiveSize; i++) {
+        std::cout << positiveArr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Від'ємні елементи: ";
+    for (int i = 0; i < negativeSize; i++) {
+        std::cout << negativeArr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Нульові елементи: ";
+    for (int i = 0; i < zeroSize; i++) {
+        std::cout << zeroArr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] positiveArr;
+    delete[] negativeArr;
+    delete[] zeroArr;
+
+    return 0;
+}
