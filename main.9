@@ -1,0 +1,67 @@
+#include <iostream>
+#include <cmath>
+#include <windows.h>
+bool isPrime(int num) {
+    
+    if (num < 2) {
+        return false;
+    }
+
+    for (int i = 2; i <= std::sqrt(num); i++) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int* removePrimes(int* arr, int size, int& newSize) {
+
+    int count = 0;
+    for (int i = 0; i < size; i++) {
+        if (isPrime(arr[i])) {
+            count++;
+        }
+    }
+
+    newSize = size - count;
+    int* newArr = new int[newSize];
+    int newIndex = 0;
+
+    for (int i = 0; i < size; i++) {
+        if (!isPrime(arr[i])) {
+            newArr[newIndex] = arr[i];
+            newIndex++;
+        }
+    }
+
+    return newArr;
+}
+
+int main() {
+    SetConsoleOutputCP(1251);
+    int size;
+    std::cout << "Введіть розмір масиву: ";
+    std::cin >> size;
+
+    int* arr = new int[size];
+    std::cout << "Введіть елементи масиву: ";
+    for (int i = 0; i < size; i++) {
+        std::cin >> arr[i];
+    }
+
+    int newSize;
+    int* newArr = removePrimes(arr, size, newSize);
+
+    std::cout << "Новий масив без простих чисел: ";
+    for (int i = 0; i < newSize; i++) {
+        std::cout << newArr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] arr;
+    delete[] newArr;
+
+    return 0;
+}
