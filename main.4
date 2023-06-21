@@ -1,0 +1,46 @@
+#include <iostream>
+
+int* removeNegativeNumbers(const int* arr, int size, int& newSize) {
+    int positiveCount = 0;
+
+
+    for (int i = 0; i < size; i++) {
+        if (arr[i] >= 0) {
+            positiveCount++;
+        }
+    }
+
+ 
+    int* positiveArr = new int[positiveCount];
+    int index = 0;
+
+   
+    for (int i = 0; i < size; i++) {
+        if (arr[i] >= 0) {
+            positiveArr[index] = arr[i];
+            index++;
+        }
+    }
+
+    newSize = positiveCount;  
+
+    return positiveArr; 
+}
+
+int main() {
+    int arr[] = { -2, 0, 4, -1, 0, 5 };
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    int newSize = 0;
+    int* positiveArr = removeNegativeNumbers(arr, size, newSize);
+
+    std::cout << "Positive array: ";
+    for (int i = 0; i < newSize; i++) {
+        std::cout << positiveArr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] positiveArr; 
+
+    return 0;
+}
